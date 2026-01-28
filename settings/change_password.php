@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../auth/auth_check.php';
+require_once __DIR__ . '/../partials/flash.php';
 
 $pageTitle = 'Change Password';
 $active = 'change_password';
@@ -36,15 +37,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (!password_verify($oldPassword, $user['password'])) {
       $errorMsg = 'Old password is incorrect.';
     } else {
-      // Update password
+      // Update password and invalidate session
       $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-      $stmt = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
+      $stmt = $conn->prepare("UPDATE users SET password = ?, session_token = UUID() WHERE id = ?");
       $stmt->bind_param('si', $hashedPassword, $userId);
       $stmt->execute();
       $stmt->close();
 
-      $successMsg = 'Password changed successfully.';
-      $_POST = []; // Clear form
+      // Destroy session and redirect to login
+      session_destroy();
+      flash_set('success', 'Password changed successfully. Please login with your new password.');
+      header('Location: ../auth/login.php');
+      exit;
     }
   }
 }

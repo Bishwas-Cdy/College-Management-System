@@ -136,7 +136,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'uploa
     // Try alternative method with finfo
     $finfo2 = finfo_open(FILEINFO_MIME_TYPE);
     $verifyMime = finfo_file($finfo2, $file['tmp_name']);
-    finfo_close($finfo2);
     if ($verifyMime !== 'application/pdf') {
       flash_set('error', 'File validation failed. Only genuine PDF files are allowed.');
       header('Location: materials.php');
