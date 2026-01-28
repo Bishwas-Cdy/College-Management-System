@@ -1,4 +1,6 @@
-  <?php include('./partials/header.php')?>
+  <?php 
+    include('./partials/header.php');
+  ?>
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg sticky-top">
@@ -20,9 +22,20 @@
               <li class="nav-item"><a class="nav-link" href="#roles">Roles</a></li>
               <li class="nav-item"><a class="nav-link" href="#modules">Modules</a></li>
               <li class="nav-item ms-lg-2">
-                <a class="btn btn-primary rounded-3 px-3" href="./auth/login.php">
-                  <i class="bi bi-box-arrow-in-right me-2"></i>Login
-                </a>
+                <?php if (empty($_SESSION['user_id'])): ?>
+                  <a class="btn btn-primary rounded-3 px-3" href="./auth/login.php">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                  </a>
+                <?php else: ?>
+                  <div class="d-flex gap-2">
+                    <a class="btn btn-outline-primary rounded-3 px-3" href="<?= ($_SESSION['role'] === 'admin' ? './admin/dashboard.php' : ($_SESSION['role'] === 'faculty' ? './faculty/dashboard.php' : './student/dashboard.php')) ?>">
+                      <i class="bi bi-speedometer2 me-2"></i>Dashboard
+                    </a>
+                    <a class="btn btn-danger rounded-3 px-3" href="./auth/logout.php">
+                      <i class="bi bi-box-arrow-right me-2"></i>Logout
+                    </a>
+                  </div>
+                <?php endif; ?>
               </li>
             </ul>
           </div>

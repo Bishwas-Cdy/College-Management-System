@@ -104,10 +104,6 @@ $_SESSION['name'] = $user_name;
 $_SESSION['role'] = (string)$user['role'];
 $_SESSION['session_token'] = (string)$user['session_token'];
 
-// Optional: remember me (simple cookie token placeholder)
-// For real "remember me", you should store a secure token in DB.
-// Here we only keep it UI-level, so ignore it in backend for now.
-
 // Role-based redirect
 switch ($_SESSION['role']) {
   case 'admin':
