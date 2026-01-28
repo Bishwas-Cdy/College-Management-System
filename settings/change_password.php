@@ -114,7 +114,7 @@ include __DIR__ . '/../partials/app_navbar.php';
                   </div>
 
                   <div class="col-12">
-                    <a href="../dashboard.php" class="btn btn-outline-secondary w-100">Cancel</a>
+                    <a href="../<?= h($role) ?>/dashboard.php" class="btn btn-outline-secondary w-100">Cancel</a>
                   </div>
 
                 </form>

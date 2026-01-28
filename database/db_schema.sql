@@ -1,11 +1,3 @@
-/* =========================================================
-   CMS Database (Aligned with your PDF Data Dictionary)
-   - semester is VARCHAR(10) in students/subjects/attendance/exams/fees/results
-   - users.email is VARCHAR(100)
-   - payments.payment_date is DATE
-   WARNING: Drops existing tables (data loss)
-   ========================================================= */
-
 SET sql_mode = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION';
 SET time_zone = '+00:00';
 

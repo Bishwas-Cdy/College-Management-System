@@ -97,7 +97,7 @@ function log_audit(mysqli $conn, int $user_id, string $action, string $model, $r
   if (!$stmt) return false;
   
   $recordIdStr = (string)$record_id;
-  $stmt->bind_param('isiss', $user_id, $action, $model, $recordIdStr, $details);
+  $stmt->bind_param('issss', $user_id, $action, $model, $recordIdStr, $details);
   $result = $stmt->execute();
   $stmt->close();
   

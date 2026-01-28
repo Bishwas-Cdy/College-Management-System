@@ -1,9 +1,4 @@
 <?php
-/**
- * Migration: Add session_token column to users table if it doesn't exist
- * Run this once to add the column for session invalidation
- */
-
 require_once __DIR__ . '/../config/db.php';
 
 try {
@@ -13,13 +8,13 @@ try {
   if ($result && $result->num_rows === 0) {
     // Column doesn't exist, add it
     $conn->query("ALTER TABLE users ADD COLUMN session_token VARCHAR(36) NULL");
-    echo "✓ Added session_token column to users table<br>";
+    echo "Added session_token column to users table<br>";
     
     // Populate existing users with UUIDs
     $conn->query("UPDATE users SET session_token = UUID() WHERE session_token IS NULL");
-    echo "✓ Populated session_token for existing users<br>";
+    echo "Populated session_token for existing users<br>";
   } else {
-    echo "✓ session_token column already exists<br>";
+    echo "session_token column already exists<br>";
   }
   
   echo "Migration completed successfully!";

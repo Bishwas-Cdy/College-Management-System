@@ -1,8 +1,4 @@
 <?php
-/**
- * Migration: Create audit_logs table if it doesn't exist
- */
-
 require_once __DIR__ . '/../config/db.php';
 
 try {
@@ -30,9 +26,9 @@ try {
     // Add indexes
     $conn->query("CREATE INDEX idx_audit_user_date ON audit_logs(user_id, created_at)");
     $conn->query("CREATE INDEX idx_audit_table ON audit_logs(table_name, created_at)");
-    echo "✓ Created indexes<br>";
+    echo "Created indexes<br>";
   } else {
-    echo "✓ audit_logs table already exists<br>";
+    echo "audit_logs table already exists<br>";
   }
   
   echo "Migration completed successfully!";
