@@ -232,7 +232,8 @@ if (!empty($search)) {
   $stmt = $conn->prepare($countSql);
 }
 $stmt->execute();
-$totalCount = (int)$stmt->get_result()->fetch_assoc()['cnt'];
+$row = $stmt->get_result()->fetch_assoc();
+$totalCount = (int)($row['cnt'] ?? 0);
 $stmt->close();
 
 $sql = "SELECT i.*, s.name AS student_name, s.roll_number, c.course_name, s.semester, f.amount

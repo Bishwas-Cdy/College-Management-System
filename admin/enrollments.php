@@ -71,7 +71,8 @@ if ($selectedStudentId > 0) {
   $stmt = $conn->prepare("SELECT COUNT(*) as cnt FROM enrollments WHERE student_id = ?");
   $stmt->bind_param('i', $selectedStudentId);
   $stmt->execute();
-  $enrolledTotal = (int)$stmt->get_result()->fetch_assoc()['cnt'];
+  $row = $stmt->get_result()->fetch_assoc();
+  $enrolledTotal = (int)($row['cnt'] ?? 0);
   $stmt->close();
 
   // Load current enrollments with pagination

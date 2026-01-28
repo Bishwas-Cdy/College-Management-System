@@ -336,7 +336,8 @@ try {
     $stmt->bind_param($paramTypes, ...$paramVals);
   }
   $stmt->execute();
-  $totalCount = (int)$stmt->get_result()->fetch_assoc()['cnt'];
+  $row = $stmt->get_result()->fetch_assoc();
+  $totalCount = (int)($row['cnt'] ?? 0);
   $stmt->close();
 
   // Fetch students (with search, course filter, active status, and pagination)

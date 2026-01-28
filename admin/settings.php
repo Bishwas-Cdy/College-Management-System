@@ -40,18 +40,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Update settings
     $stmt = $conn->prepare("UPDATE system_settings SET setting_value = ? WHERE setting_key = ?");
     
-    $stmt->bind_param('ss', $college_name, $key);
     $key = 'college_name';
+    $stmt->bind_param('ss', $college_name, $key);
     $stmt->execute();
+    $stmt->close();
     
-    $stmt->bind_param('ss', $academic_year, $key);
+    $stmt = $conn->prepare("UPDATE system_settings SET setting_value = ? WHERE setting_key = ?");
     $key = 'academic_year';
+    $stmt->bind_param('ss', $academic_year, $key);
     $stmt->execute();
+    $stmt->close();
     
-    $stmt->bind_param('ss', $default_language, $key);
+    $stmt = $conn->prepare("UPDATE system_settings SET setting_value = ? WHERE setting_key = ?");
     $key = 'default_language';
+    $stmt->bind_param('ss', $default_language, $key);
     $stmt->execute();
-    
     $stmt->close();
 
     $userId = (int)($_SESSION['user_id'] ?? 0);

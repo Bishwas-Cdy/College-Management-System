@@ -273,7 +273,8 @@ try {
     $stmt = $conn->prepare($countSql);
   }
   $stmt->execute();
-  $totalCount = (int)$stmt->get_result()->fetch_assoc()['cnt'];
+  $row = $stmt->get_result()->fetch_assoc();
+  $totalCount = (int)($row['cnt'] ?? 0);
   $stmt->close();
 
   // Fetch faculty (with search and pagination)
