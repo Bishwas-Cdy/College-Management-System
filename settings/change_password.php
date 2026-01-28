@@ -3,6 +3,7 @@ require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../auth/auth_check.php';
 
 $pageTitle = 'Change Password';
+$active = 'change_password';
 
 function h(string $v): string { return htmlspecialchars($v, ENT_QUOTES, 'UTF-8'); }
 
@@ -49,7 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $role = $_SESSION['role'] ?? 'guest';
-$active = 'settings';
 
 include __DIR__ . '/../partials/header.php';
 include __DIR__ . '/../partials/app_navbar.php';

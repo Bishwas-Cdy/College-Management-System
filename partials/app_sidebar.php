@@ -10,6 +10,16 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 $role = $_SESSION['role'] ?? 'guest';
 $active = $active ?? 'dashboard';
 
+// Detect current directory to adjust relative paths
+$scriptDir = basename(dirname($_SERVER['SCRIPT_FILENAME']));
+$pathPrefix = '';
+if ($scriptDir !== 'admin' && $scriptDir !== 'faculty' && $scriptDir !== 'student') {
+  // We're in a subdirectory like /settings/, so prefix admin links
+  if ($role === 'admin') {
+    $pathPrefix = '../admin/';
+  }
+}
+
 function isActive(string $key, string $active): string {
   return $key === $active ? 'active' : '';
 }
@@ -17,22 +27,22 @@ function isActive(string $key, string $active): string {
 // Menu by role
 $menus = [
   'admin' => [
-    ['key' => 'dashboard', 'label' => 'Dashboard', 'icon' => 'bi-speedometer2', 'href' => 'dashboard.php'],
-    ['key' => 'students',  'label' => 'Students',  'icon' => 'bi-mortarboard',  'href' => 'students.php'],
-    ['key' => 'faculty',   'label' => 'Faculty',   'icon' => 'bi-person-workspace', 'href' => 'faculty.php'],
-    ['key' => 'courses',   'label' => 'Courses',   'icon' => 'bi-journal-bookmark', 'href' => 'courses.php'],
-    ['key' => 'subjects',  'label' => 'Subjects',  'icon' => 'bi-book',         'href' => 'subjects.php'],
-    ['key' => 'faculty_subject', 'label' => 'Assign', 'icon' => 'bi-link-45deg', 'href' => 'faculty_subject.php'],
-    ['key' => 'enrollments', 'label' => 'Enrollments', 'icon' => 'bi-people', 'href' => 'enrollments.php'],
-    ['key' => 'timetable', 'label' => 'Timetable', 'icon' => 'bi-calendar2-week', 'href' => 'timetable.php'],
-    ['key' => 'attendance','label' => 'Attendance Report','icon' => 'bi-calendar-check', 'href' => 'attendance_report.php'],
-    ['key' => 'exams',     'label' => 'Exams',     'icon' => 'bi-award',        'href' => 'exams.php'],
-    ['key' => 'fees',      'label' => 'Fees',      'icon' => 'bi-cash-coin',    'href' => 'fees.php'],
-    ['key' => 'invoices',  'label' => 'Invoices',  'icon' => 'bi-receipt',      'href' => 'invoices.php'],
-    ['key' => 'fee_report','label' => 'Fee Report','icon' => 'bi-bar-chart',    'href' => 'fee_report.php'],
-    ['key' => 'messages',  'label' => 'Messaging', 'icon' => 'bi-chat-dots',    'href' => 'messages.php'],
-    ['key' => 'materials', 'label' => 'Materials', 'icon' => 'bi-folder2-open','href' => 'materials.php'],
-    ['key' => 'settings',  'label' => 'Settings',  'icon' => 'bi-gear',         'href' => 'settings.php'],
+    ['key' => 'dashboard', 'label' => 'Dashboard', 'icon' => 'bi-speedometer2', 'href' => $pathPrefix . 'dashboard.php'],
+    ['key' => 'students',  'label' => 'Students',  'icon' => 'bi-mortarboard',  'href' => $pathPrefix . 'students.php'],
+    ['key' => 'faculty',   'label' => 'Faculty',   'icon' => 'bi-person-workspace', 'href' => $pathPrefix . 'faculty.php'],
+    ['key' => 'courses',   'label' => 'Courses',   'icon' => 'bi-journal-bookmark', 'href' => $pathPrefix . 'courses.php'],
+    ['key' => 'subjects',  'label' => 'Subjects',  'icon' => 'bi-book',         'href' => $pathPrefix . 'subjects.php'],
+    ['key' => 'faculty_subject', 'label' => 'Assign', 'icon' => 'bi-link-45deg', 'href' => $pathPrefix . 'faculty_subject.php'],
+    ['key' => 'enrollments', 'label' => 'Enrollments', 'icon' => 'bi-people', 'href' => $pathPrefix . 'enrollments.php'],
+    ['key' => 'timetable', 'label' => 'Timetable', 'icon' => 'bi-calendar2-week', 'href' => $pathPrefix . 'timetable.php'],
+    ['key' => 'attendance','label' => 'Attendance Report','icon' => 'bi-calendar-check', 'href' => $pathPrefix . 'attendance_report.php'],
+    ['key' => 'exams',     'label' => 'Exams',     'icon' => 'bi-award',        'href' => $pathPrefix . 'exams.php'],
+    ['key' => 'fees',      'label' => 'Fees',      'icon' => 'bi-cash-coin',    'href' => $pathPrefix . 'fees.php'],
+    ['key' => 'invoices',  'label' => 'Invoices',  'icon' => 'bi-receipt',      'href' => $pathPrefix . 'invoices.php'],
+    ['key' => 'fee_report','label' => 'Fee Report','icon' => 'bi-bar-chart',    'href' => $pathPrefix . 'fee_report.php'],
+    ['key' => 'messages',  'label' => 'Messaging', 'icon' => 'bi-chat-dots',    'href' => $pathPrefix . 'messages.php'],
+    ['key' => 'materials', 'label' => 'Materials', 'icon' => 'bi-folder2-open','href' => $pathPrefix . 'materials.php'],
+    ['key' => 'settings',  'label' => 'Settings',  'icon' => 'bi-gear',         'href' => $pathPrefix . 'settings.php'],
     ['key' => 'change_password', 'label' => 'Change Password', 'icon' => 'bi-shield-lock', 'href' => '../settings/change_password.php'],
   ],
   'faculty' => [
