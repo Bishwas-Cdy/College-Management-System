@@ -25,7 +25,7 @@ $menus = [
     ['key' => 'faculty_subject', 'label' => 'Assign', 'icon' => 'bi-link-45deg', 'href' => 'faculty_subject.php'],
     ['key' => 'enrollments', 'label' => 'Enrollments', 'icon' => 'bi-people', 'href' => 'enrollments.php'],
     ['key' => 'timetable', 'label' => 'Timetable', 'icon' => 'bi-calendar2-week', 'href' => 'timetable.php'],
-    ['key' => 'attendance','label' => 'Attendance','icon' => 'bi-calendar-check', 'href' => 'attendance_report.php'],
+    ['key' => 'attendance','label' => 'Attendance Report','icon' => 'bi-calendar-check', 'href' => 'attendance_report.php'],
     ['key' => 'exams',     'label' => 'Exams',     'icon' => 'bi-award',        'href' => 'exams.php'],
     ['key' => 'fees',      'label' => 'Fees',      'icon' => 'bi-cash-coin',    'href' => 'fees.php'],
     ['key' => 'invoices',  'label' => 'Invoices',  'icon' => 'bi-receipt',      'href' => 'invoices.php'],

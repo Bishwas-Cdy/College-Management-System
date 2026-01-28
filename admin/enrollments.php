@@ -242,9 +242,9 @@ include __DIR__ . '/../partials/app_navbar.php';
                   </div>
                 </form>
 
-                <div class="text-muted small mt-3">
+                <!-- <div class="text-muted small mt-3">
                   Requires: subjects exist for the student’s course+semester.
-                </div>
+                </div> -->
               <?php endif; ?>
             </div>
           </div>
@@ -323,9 +323,9 @@ include __DIR__ . '/../partials/app_navbar.php';
                 <?php endif; ?>
               <?php endif; ?>
 
-              <div class="text-muted small mt-3">
+              <!-- <div class="text-muted small mt-3">
                 Next: Timetable and Attendance will use these enrollments.
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

@@ -268,7 +268,7 @@ include __DIR__ . '/../partials/app_navbar.php';
                 </div>
 
                 <div class="mb-3">
-                  <label class="form-label fw-semibold">Faculty (optional)</label>
+                  <label class="form-label fw-semibold">Faculty</label>
                   <select class="form-select" name="faculty_id">
                     <option value="0">-- None --</option>
                     <?php foreach ($faculty as $f): ?>
