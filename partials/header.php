@@ -34,6 +34,6 @@
   <link
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     rel="stylesheet">
-  <link rel="stylesheet" href="./public/style.css">
+  <link rel="stylesheet" href="./public/css/style.css">
 </head>
 <body>
