@@ -22,7 +22,7 @@ $menus = [
     ['key' => 'faculty',   'label' => 'Faculty',   'icon' => 'bi-person-workspace', 'href' => 'faculty.php'],
     ['key' => 'courses',   'label' => 'Courses',   'icon' => 'bi-journal-bookmark', 'href' => 'courses.php'],
     ['key' => 'subjects',  'label' => 'Subjects',  'icon' => 'bi-book',         'href' => 'subjects.php'],
-    ['key' => 'faculty_subject', 'label' => 'Assignments', 'icon' => 'bi-link-45deg', 'href' => 'faculty_subject.php'],
+    ['key' => 'faculty_subject', 'label' => 'Assign', 'icon' => 'bi-link-45deg', 'href' => 'faculty_subject.php'],
     ['key' => 'enrollments', 'label' => 'Enrollments', 'icon' => 'bi-people', 'href' => 'enrollments.php'],
     ['key' => 'timetable', 'label' => 'Timetable', 'icon' => 'bi-calendar2-week', 'href' => 'timetable.php'],
     ['key' => 'attendance','label' => 'Attendance','icon' => 'bi-calendar-check', 'href' => 'attendance_report.php'],
