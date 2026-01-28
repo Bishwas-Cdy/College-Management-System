@@ -7,6 +7,23 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
   session_start();
 }
 
+// Get system settings (college name)
+$collegeName = 'CMS';
+if (!isset($conn)) {
+  $conn = null;
+  if (file_exists(__DIR__ . '/../config/db.php')) {
+    try {
+      require_once __DIR__ . '/../config/db.php';
+    } catch (Throwable $e) {
+      $conn = null;
+    }
+  }
+}
+if ($conn) {
+  $settings = get_system_settings($conn);
+  $collegeName = $settings['college_name'] ?? 'CMS';
+}
+
 $role = $_SESSION['role'] ?? 'guest';
 $email = $_SESSION['email'] ?? '';
 $name = $_SESSION['name'] ?? '';
@@ -26,7 +43,7 @@ $pageTitle = $pageTitle ?? 'Dashboard';
     <div class="w-100 px-3 py-2 d-flex align-items-center justify-content-between">
       <a class="navbar-brand fw-bold text-primary m-0 d-flex align-items-center gap-2" href="../index.php">
         <i class="bi bi-grid-fill"></i>
-        <span>CMS</span>
+        <span><?= htmlspecialchars($collegeName) ?></span>
       </a>
 
       <div class="d-flex align-items-center gap-2">

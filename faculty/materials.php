@@ -130,19 +130,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'uploa
     exit;
   }
 
-  // Server-side file type verification using finfo_file (extra security check)
-  $realMime = mime_content_type($file['tmp_name']) ?: '';
-  if (strpos($realMime, 'application/pdf') === false && strpos($realMime, 'text/plain') === false) {
-    // Try alternative method with finfo
-    $finfo2 = finfo_open(FILEINFO_MIME_TYPE);
-    $verifyMime = finfo_file($finfo2, $file['tmp_name']);
-    if ($verifyMime !== 'application/pdf') {
-      flash_set('error', 'File validation failed. Only genuine PDF files are allowed.');
-      header('Location: materials.php');
-      exit;
-    }
-  }
-
   $uploadDir = realpath(__DIR__ . '/../uploads/materials');
   if (!$uploadDir) {
     flash_set('error', 'Upload folder missing: /uploads/materials');
@@ -169,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'uploa
     INSERT INTO study_materials (subject_id, course_id, semester, uploaded_by_faculty_id, title, description, file_path, file_type)
     VALUES (?, ?, ?, ?, ?, NULLIF(?, ''), ?, ?)
   ");
-  $stmt->bind_param('iisiisss', $subjectId, $courseId, $semester, $facultyId, $title, $description, $relativePath, $fileType);
+  $stmt->bind_param('iisissss', $subjectId, $courseId, $semester, $facultyId, $title, $description, $relativePath, $fileType);
   $stmt->execute();
   $stmt->close();
 
@@ -177,10 +164,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'uploa
   $stmtEnrolled = $conn->prepare("
     SELECT DISTINCT u.id
     FROM enrollments e
-    JOIN users u ON u.id = e.user_id
-    WHERE e.subject_id = ? AND e.course_id = ? AND e.semester = ?
+    JOIN students s ON s.id = e.student_id
+    JOIN users u ON u.id = s.user_id
+    WHERE e.subject_id = ?
   ");
-  $stmtEnrolled->bind_param('iis', $subjectId, $courseId, $semester);
+  $stmtEnrolled->bind_param('i', $subjectId);
   $stmtEnrolled->execute();
   $enrolled = $stmtEnrolled->get_result()->fetch_all(MYSQLI_ASSOC);
   $stmtEnrolled->close();

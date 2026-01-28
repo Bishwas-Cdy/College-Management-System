@@ -3,7 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>College Management System</title>
+  <title><?php 
+    // Get college name for page title
+    if (!isset($pageTitle)) $pageTitle = 'Dashboard';
+    $collegeName = 'CMS';
+    if (!isset($conn)) {
+      if (file_exists(__DIR__ . '/../config/db.php')) {
+        try {
+          require_once __DIR__ . '/../config/db.php';
+        } catch (Throwable $e) {
+          $conn = null;
+        }
+      }
+    }
+    if (isset($conn) && $conn) {
+      $settings = get_system_settings($conn);
+      $collegeName = $settings['college_name'] ?? 'CMS';
+    }
+    echo htmlspecialchars($collegeName) . ' - ' . htmlspecialchars($pageTitle);
+  ?></title>
   <!-- Bootstrap 5 CSS -->
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"

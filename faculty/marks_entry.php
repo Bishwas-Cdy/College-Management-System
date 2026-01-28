@@ -207,17 +207,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Send notifications to students in this exam+subject
     $stmtNotif = $conn->prepare("
-      SELECT DISTINCT e.user_id
+      SELECT DISTINCT u.id
       FROM enrollments e
-      WHERE e.subject_id = ? AND e.course_id = (SELECT course_id FROM exams WHERE id = ? LIMIT 1)
+      JOIN students s ON s.id = e.student_id
+      JOIN users u ON u.id = s.user_id
+      WHERE e.subject_id = ?
     ");
-    $stmtNotif->bind_param('ii', $subjectId, $examId);
+    $stmtNotif->bind_param('i', $subjectId);
     $stmtNotif->execute();
     $notifRows = $stmtNotif->get_result()->fetch_all(MYSQLI_ASSOC);
     $stmtNotif->close();
 
     if (!empty($notifRows)) {
-      $notifUserIds = array_map(fn($row) => (int)$row['user_id'], $notifRows);
+      $notifUserIds = array_map(fn($row) => (int)$row['id'], $notifRows);
       send_notifications_batch($conn, $notifUserIds, 'Your exam marks have been published. Check your dashboard.');
     }
 

@@ -80,6 +80,23 @@ if ($studentId > 0) {
   $pendingInvoices = (int)($invRow['cnt'] ?? 0);
 }
 
+// Latest study materials (filtered by course and semester)
+$latestMaterials = [];
+if ($courseId > 0 && $semester !== '') {
+  $stmt = $conn->prepare("
+    SELECT m.id, m.title, s.subject_name
+    FROM study_materials m
+    JOIN subjects s ON s.id = m.subject_id
+    WHERE m.course_id = ? AND m.semester = ?
+    ORDER BY m.created_at DESC
+    LIMIT 5
+  ");
+  $stmt->bind_param('is', $courseId, $semester);
+  $stmt->execute();
+  $latestMaterials = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+  $stmt->close();
+}
+
 include(__DIR__ . '/../partials/header.php');
 include(__DIR__ . '/../partials/app_navbar.php');
 ?>
@@ -141,11 +158,22 @@ include(__DIR__ . '/../partials/app_navbar.php');
           <div class="col-lg-7">
             <div class="glass rounded-4 p-4 border h-100">
               <h5 class="fw-semibold mb-3"><i class="bi bi-folder2-open me-2"></i>Latest Study Materials</h5>
-              <div class="small-muted">Hook this to study_materials table filtered by course and semester.</div>
-              <ul class="mt-3 small-muted mb-0 ps-3">
-                <li>DBMS Notes - Week 3 (PDF)</li>
-                <li>DSA Assignment 1 (PDF)</li>
-              </ul>
+              <?php if (!empty($latestMaterials)): ?>
+                <div class="small">
+                  <ul class="list-unstyled mb-0">
+                    <?php foreach ($latestMaterials as $m): ?>
+                      <li class="mb-2 pb-2 border-bottom">
+                        <div class="fw-semibold"><?= htmlspecialchars($m['title']) ?></div>
+                        <div class="small text-muted"><?= htmlspecialchars($m['subject_name']) ?></div>
+                      </li>
+                    <?php endforeach; ?>
+                  </ul>
+                </div>
+              <?php else: ?>
+                <div class="small-muted text-center py-3">
+                  <p class="mb-0">No study materials available yet.</p>
+                </div>
+              <?php endif; ?>
             </div>
           </div>
           <div class="col-lg-5">
@@ -155,8 +183,8 @@ include(__DIR__ . '/../partials/app_navbar.php');
                 <a class="btn btn-outline-dark rounded-3" href="timetable.php"><i class="bi bi-calendar2-week me-2"></i>View Timetable</a>
                 <a class="btn btn-outline-dark rounded-3" href="attendance.php"><i class="bi bi-calendar-check me-2"></i>View Attendance</a>
                 <a class="btn btn-outline-dark rounded-3" href="results.php"><i class="bi bi-award me-2"></i>View Results</a>
-                <a class="btn btn-outline-dark rounded-3" href="invoices.php"><i class="bi bi-receipt me-2"></i>View Invoices</a>
-                <a class="btn btn-outline-dark rounded-3" href="messages.php"><i class="bi bi-chat-dots me-2"></i>Messages</a>
+                <a class="btn btn-outline-dark rounded-3" href="fees.php"><i class="bi bi-receipt me-2"></i>View Invoices</a>
+                <a class="btn btn-outline-dark rounded-3" href="materials.php"><i class="bi bi-folder2-open me-2"></i>Study Materials</a>
               </div>
             </div>
           </div>

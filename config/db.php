@@ -17,3 +17,6 @@ if ($conn->connect_error) {
 
 // Set charset
 $conn->set_charset('utf8mb4');
+
+// Include helpers for get_system_settings() and other utilities
+require_once __DIR__ . '/helpers.php';

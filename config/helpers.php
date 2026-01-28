@@ -26,6 +26,37 @@ function send_notification(mysqli $conn, int $user_id, string $message): bool {
 }
 
 /**
+ * Get system settings (cached during request)
+ * @param mysqli $conn Database connection
+ * @return array Settings array
+ */
+function get_system_settings(mysqli $conn): array {
+  static $cached = null;
+  
+  if ($cached !== null) {
+    return $cached;
+  }
+  
+  $cached = [
+    'college_name' => 'CMS',
+    'academic_year' => '2025-2026',
+    'default_language' => 'en'
+  ];
+  
+  try {
+    $result = $conn->query("SELECT setting_key, setting_value FROM system_settings");
+    if ($result) {
+      while ($row = $result->fetch_assoc()) {
+        $cached[$row['setting_key']] = $row['setting_value'];
+      }
+    }
+  } catch (Throwable $e) {
+    // If query fails, use defaults
+  }
+  
+  return $cached;
+}
+/**
  * Send notifications to multiple users
  * @param mysqli $conn Database connection
  * @param array $user_ids Array of recipient user IDs

@@ -122,19 +122,6 @@ include __DIR__ . '/../partials/app_navbar.php';
               </div>
             </div>
 
-            <div class="card border-0 rounded-4 shadow-sm mt-3">
-              <div class="card-body p-4">
-                <h5 class="fw-semibold mb-2">Password Requirements</h5>
-                <ul class="small list-unstyled">
-                  <li><i class="bi bi-check-circle text-success me-2"></i>At least 8 characters long</li>
-                  <li><i class="bi bi-check-circle text-success me-2"></i>Unique and not used before</li>
-                  <li><i class="bi bi-check-circle text-success me-2"></i>Mix of uppercase and lowercase</li>
-                  <li><i class="bi bi-check-circle text-success me-2"></i>At least one number (0-9)</li>
-                  <li><i class="bi bi-check-circle text-success me-2"></i>At least one special character (!@#$%)</li>
-                </ul>
-              </div>
-            </div>
-
           </div>
         </div>
 
